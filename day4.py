@@ -1,3 +1,5 @@
+# TODO: implement heap for part 2
+
 def parseInput():
     filepath = 'day4input.txt'
     input = []
@@ -16,22 +18,34 @@ def getValidPhrases(phrases):
     length = len(phrases)
     for i in range(0, length):
         track = []
+        anagrams = []
         words = phrases[i].split(' ')
         numWords = len(words)
         j = 0
         done = False
         valid = True
-        valid2 = True
+        noAnagrams = True
         while not done and j < numWords:
-            if words[j] not in track:
-                
+            if words[j] not in track:                
                 track.append(words[j])
+                splitChars = list(words[j])
+                splitChars.sort()
+                orderedChars = "".join(splitChars)
+                if orderedChars not in anagrams:
+                    anagrams.append(orderedChars)
+                else:
+                    noAnagrams = False
+                    done = True
+                    print anagrams, splitChars
             else:
                 done = True
-                valid = False
+                valid = False 
+               
             j += 1
         if valid:
             count1 += 1
+        if noAnagrams:
+            count2 += 1
     return (count1, count2)
 
 
